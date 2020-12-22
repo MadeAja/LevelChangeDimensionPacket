@@ -28,6 +28,7 @@ final class ClearScreenTask extends Task{
             for($j=-2;$j<=2;$j++){
                 $xx = $x + (16 * $i);
                 $zz = $z + (16 * $j);
+                $level->loadChunk($xx, $zz);
                 $chunk = $level->getChunk($xx, $zz);
                 $pk = LevelChunkPacket::withoutCache($xx >> 4, $zz >> 4, count($chunk->getSubChunks()), $chunk->networkSerialize());
                 $this->player->sendDataPacket($pk);
