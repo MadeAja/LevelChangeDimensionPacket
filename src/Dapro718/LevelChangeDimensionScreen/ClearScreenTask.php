@@ -13,9 +13,11 @@ use pocketmine\network\mcpe\protocol\{ChangeDimensionPacket, PlayStatusPacket, P
 class ClearScreenTask extends Task{
 
     private $player;
+    private $position;
     
     public function __construct(Player $player, Position $position){
         $this->player = $player;
+        $this->position = $position;
     }
     
     public function onRun(int $tick): void{
@@ -27,8 +29,6 @@ class ClearScreenTask extends Task{
         $pk = new PlayStatusPacket();
         $pk->status = PlayStatusPacket::PLAYER_SPAWN;
         $this->player->sendDataPacket($pk);
-        $pk = new PlayerFogPacket();
-        $pk->fogLayers = [];
-        $this->player->sendDataPacket($pk);
+        $this->player->sendDataPacket(PlayerFogPacket::create(array()));
     }
 }
