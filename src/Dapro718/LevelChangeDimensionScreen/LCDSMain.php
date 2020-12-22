@@ -34,7 +34,7 @@ final class LCDSMain extends PluginBase implements Listener{
 							$pk->position = new Vector3($event->getTo()->getX(), $event->getTo()->getY(), $event->getTo()->getZ());
 							$pk->respawn = false;
 							$player->sendDataPacket($pk);
-							$this->getScheduler()->scheduleDelayedTask(new ClearScreenTask($player), 60);
+							$this->getScheduler()->scheduleDelayedTask(new ClearScreenTask($player, $event->getTo()), 60);
 						}
                     }
                 }
