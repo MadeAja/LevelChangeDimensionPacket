@@ -1,0 +1,10 @@
+name: LevelChangeDimensionScreen
+version: 1.0.0
+author: Dapro718
+api: 3.0.0
+main: Dapro718\LevelChangeDimensionScreen\LCDSMain
+
+permissions:
+  levelchangedimensionscreen.noscreen:
+    description: Players with this permission will not recieve the dimension screen.
+    default: false

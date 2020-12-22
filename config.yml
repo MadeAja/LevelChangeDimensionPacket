@@ -1,0 +1,8 @@
+# Main configuration for Level Change Dimension Screen.
+
+# Edit which levels players will recieve the dimension screen when teleporting to.
+# Dimension ids: Overworld - 0, Nether - 1, Ender - 2
+levels:
+  world:
+    dimension: 0
+    
