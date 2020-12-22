@@ -33,7 +33,7 @@ final class LCDSMain extends PluginBase implements Listener{
                         $pk->position = new Vector3($event->getTo()->getX(), $event->getTo()->getY(), $event->getTo()->getZ());
                         $pk->respawn = false;
                         $player->sendDataPacket($pk);
-                        $pk = LevelChunkPacket::withoutCache((int) intval($event->getTo()->getX()), (int) intval($event->getTo()->getz()), 36, "");
+                        $pk = LevelChunkPacket::withoutCacheintval(intval($event->getTo()->getX()), intval($event->getTo()->getz()), 36, "");
                         $player->sendDataPacket($pk);
                     }
                 }
