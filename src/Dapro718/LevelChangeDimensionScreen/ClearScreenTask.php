@@ -8,9 +8,9 @@ use pocketmine\Player;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\scheduler\Task;
-use pocketmine\network\mcpe\protocol\{ChangeDimensionPacket, PlayStatusPacket, PlayerFogPacket};
+use pocketmine\network\mcpe\protocol\{ChangeDimensionPacket, PlayStatusPacket, PlayerFogPacket, LevelChunkPacket};
 
-class ClearScreenTask extends Task{
+final class ClearScreenTask extends Task{
 
     private $player;
     private $position;
@@ -21,14 +21,26 @@ class ClearScreenTask extends Task{
     }
     
     public function onRun(int $tick): void{
-        $pk = new ChangeDimensionPacket();
+        $level = $this->position->getLevel();
+        $x = intval($this->position->getX());
+        $z = intval($this->position->getY());
+        for($i=-2;$i<=2;$i++){
+            for($j=-2;$j<=2;$j++){
+                $xx = $x + (16 * $i);
+                $zz = $z + (16 * $j);
+                $chunk = $level->getChunk($xx, $zz);
+                $pk = LevelChunkPacket::withoutCache($xx >> 4, $zz >> 4, count($chunk->getSubChunks()), $chunk->networkSerialize());
+                $this->player->sendDataPacket($pk);
+            }
+        }
+        /*$pk = new ChangeDimensionPacket();
         $pk->dimension = 0;
         $pk->position = new Vector3($this->position->getX(), $this->position->getY(), $this->position->getZ());
         $pk->respawn = false;
         $this->player->sendDataPacket($pk);
         $pk = new PlayStatusPacket();
         $pk->status = PlayStatusPacket::PLAYER_SPAWN;
-        $this->player->sendDataPacket($pk);
+        $this->player->sendDataPacket($pk);*/
         $this->player->sendDataPacket(PlayerFogPacket::create(array()));
     }
 }
